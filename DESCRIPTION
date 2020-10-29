@@ -10,8 +10,8 @@ Authors@R:
 Description: Machine learning models and code for sentiment analysis
              in Finnish.
 Depends: data.table
-Imports: caret, stringr, reticulate, EmoticonFindeR, text2vec,
-         TextFeatures, logging, magrittr, stringi
+Imports: caret, jsonlite, stringr, stringi, reticulate,
+         EmoticonFindeR, text2vec, TextFeatures, logging, magrittr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
