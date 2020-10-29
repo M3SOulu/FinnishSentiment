@@ -61,12 +61,20 @@ FinnishSentiment <- function(text, ...) {
 }
 
 #' @export
-FinnishSentiment.character <- function(text, model, ids=NULL) {
+FinnishSentiment.character <- function(text, model=NULL, ids=NULL) {
   ProcessFinnish(text) %>% FinnishSentiment(model)
 }
 
 #' @export
-FinnishSentiment.list <- function(text, model) {
+LoadCOVID19Model <- function() {
+  readRDS(system.file("model-covid19.rds", package="FinnishSentiment"))
+}
+
+#' @export
+FinnishSentiment.list <- function(text, model=NULL) {
+  if (is.null(model)) {
+    model <- LoadCOVID19Model()
+  }
   Features(text, model$vocab, model$lexicons) %>% FinnishSentiment(model)
 }
 
