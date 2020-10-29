@@ -69,10 +69,16 @@ ProcessFinnish.data.table <- function(text) {
   text[, tokens := TokenizeWithEmojis(text.clean)]
   voikko <- reticulate::import("libvoikko")$Voikko("fi-x-standard")
   text[, voikko := lapply(tokens, VoikkoStemTokens, voikko)]
+  if (is.character(text$tokens)) {
+    text[, tokens := list(list(tokens))]
+    text[, voikko := list(list(voikko))]
+  }
   text[, tokens.stemmed := mapply(function(tokens, voikko) {
-    mapply(function(t, v) {
-      tolower(if (length(v) == 0) t else v[[1]]$BASEFORM)
-    }, tokens, voikko)
+    if (length(voikko)) {
+      mapply(function(t, v) {
+        tolower(if (length(v) == 0) t else v[[1]]$BASEFORM)
+      }, tokens, voikko)
+    } else tokens
   }, tokens, voikko, SIMPLIFY=FALSE)]
   text
 }

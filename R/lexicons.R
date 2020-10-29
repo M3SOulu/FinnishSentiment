@@ -55,6 +55,9 @@ MatchLexicon <- function(tokens, lexicon, lexicon.name=NULL, ids=NULL) {
   tokens <- sapply(tokens, paste, collapse=" ")
   Count <- function(regex) stringr::str_count(tokens, regex)
   res <- sapply(lexicon$regex, Count)
+  if (!is.matrix(res)) {
+    res <- matrix(res, ncol=length(res))
+  }
   colnames(res) <- lexicon$value
   if (!is.null(lexicon.name)) {
     colnames(res) <- paste(lexicon.name, colnames(res), sep="_")
