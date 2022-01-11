@@ -11,9 +11,10 @@ Description: Machine learning models and code for sentiment analysis
              in Finnish.
 Depends: data.table
 Imports: caret, jsonlite, stringr, stringi, reticulate,
-         text2vec, logging, magrittr
+         text2vec, logging, magrittr, EmoticonFindeR, TextFeatures
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Remotes: M3SOulu/EmoticonFindeR, M3SOulu/TextFeatures
