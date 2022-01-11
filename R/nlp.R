@@ -1,17 +1,26 @@
 RemoveURL <- function(text) gsub("https?://[[:graph:]]*", "<url>", text)
 
-CleanText <- function(text) {
-  text <- RemoveURL(text)
-  text <- stringr::str_replace_all(text,"[^[:graph:]\n\r]", " ")
-  gsub("(^ +)|( +$)", "", text)
+ReplaceNonGraphical <- function(text) {
+  text <- stringr::str_replace_all(text, "[^[:graph:]\n\r]", " ")
 }
 
 ReplaceSpaces <- function(text) {
   gsub("[[:space:]]+", " ", text)
 }
 
+RemoveTrailingSpaces <- function(text) {
+  gsub("(^ +)|( +$)", "", text)
+}
+
 RemoveHashtags <- function(text) {
   gsub("#", " ", text)
+}
+
+ReplaceHTMLSymbols <- function(text) {
+  (text %>%
+   stringr::str_replace_all("&amp;", "&") %>%
+   stringr::str_replace_all("&gt;", ">") %>%
+   stringr::str_replace_all("&lt;", "<"))
 }
 
 TokenizeWithEmojis <- function(text) {
@@ -46,7 +55,14 @@ VoikkoStemTokens <- function(tokens, voikko=NULL) {
 
 #' @export
 Preprocess <- function(text) {
-  text %>% CleanText %>% RemoveHashtags %>% ReplaceSpaces %>% tolower
+  (text %>%
+   ## ReplaceHTMLSymbols %>%
+   RemoveURL %>%
+   ReplaceNonGraphical %>%
+   ReplaceSpaces %>%
+   RemoveTrailingSpaces %>%
+   RemoveHashtags %>%
+   tolower)
 }
 
 #' @export
