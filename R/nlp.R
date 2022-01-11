@@ -71,16 +71,16 @@ ProcessFinnish <- function(text, ...) {
 }
 
 #' @export
-ProcessFinnish.character <- function(text, ids=NULL) {
+ProcessFinnish.character <- function(text, ids=NULL, ...) {
   if (is.null(ids)) {
     ids <- 1:length(text)
   }
   text <- data.table(text=text, id=ids)
-  ProcessFinnish(text)
+  ProcessFinnish(text, ...)
 }
 
 #' @export
-ProcessFinnish.data.table <- function(text) {
+ProcessFinnish.data.table <- function(text, ...) {
   text[, text.clean := Preprocess(text)]
   text[, tokens := TokenizeWithEmojis(text.clean)]
   voikko <- reticulate::import("libvoikko")$Voikko("fi-x-standard")

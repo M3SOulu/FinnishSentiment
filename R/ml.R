@@ -61,8 +61,8 @@ FinnishSentiment <- function(text, ...) {
 }
 
 #' @export
-FinnishSentiment.character <- function(text, model=NULL, ids=NULL) {
-  ProcessFinnish(text) %>% FinnishSentiment(model)
+FinnishSentiment.character <- function(text, model=NULL, ids=NULL, ...) {
+  ProcessFinnish(text) %>% FinnishSentiment(model, ...)
 }
 
 #' @export
@@ -71,17 +71,17 @@ LoadCOVID19Model <- function() {
 }
 
 #' @export
-FinnishSentiment.list <- function(text, model=NULL) {
+FinnishSentiment.list <- function(text, model=NULL, ...) {
   if (is.null(model)) {
     model <- LoadCOVID19Model()
   }
-  Features(text, model$vocab, model$lexicons) %>% FinnishSentiment(model)
+  Features(text, model$vocab, model$lexicons) %>% FinnishSentiment(model, ...)
 }
 
 #' @export
 FinnishSentiment.data.frame <- FinnishSentiment.list
 
 #' @export
-FinnishSentiment.Matrix <- function(text, model) {
+FinnishSentiment.Matrix <- function(text, model, ...) {
   predict(model$model, text)
 }
