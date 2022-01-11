@@ -6,4 +6,5 @@
 #' @name FinnishSentiment
 #' @import data.table
 #' @import magrittr
+#' @import caret
 NULL
